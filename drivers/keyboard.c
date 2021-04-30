@@ -50,9 +50,9 @@ int validkey(char val)
 }
 
 static void keyboard_callback(registers_t regs) {
-    /* The PIC leaves us the scancode in port 0x60 */
+
     u8 scancode = port_byte_in(0x60);
-    
+
     if (validkey(scancode) == 1) return;
 
     if (scancode == BACKSPACE) {
@@ -65,12 +65,11 @@ static void keyboard_callback(registers_t regs) {
 
     } else if (scancode == ENTER) {
         kprint("\n");
-        user_input(key_buffer); /* kernel-controlled function */
-        key_buffer[0] = '\0';
+        user_input(key_buffer);
+        return;
 
     } else {
         char letter = sc_ascii[(int)scancode];
-        /* Remember that kprint only accepts char[] */
         char str[2] = {letter, '\0'};
         append(key_buffer, letter);
         kprint(str);

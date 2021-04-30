@@ -3,38 +3,49 @@
 #include "kernel.h"
 #include "../libc/string.h"
 
+#define shell "\n$>"
+
 void main() {
     isr_install();
     irq_install();
 
     clear_screen();
 
-    kprint("WELCOME TO FETZ-OS!\n> ");
+    kprint("WELCOME TO FETZ-OS v1.0");
+    kprint(shell);
 }
+
+char help[] = "AVAILABLE COMMANDS: \n\tECHO \n\tBB \n\tREBOOT";
 
 void user_input(char *input) {
 
     char sub[4];
-    substring(sub, input, 0, 4);
-    if (strcmp("ECHO", sub) == 0){
+    substring(sub, input, 0, 5);
+    if (strcmp("ECHO ", sub) == 0){
         substring(sub, input, 5, strlen(input));
         kprint(sub);
-        kprint("\n>");
+        kprint(shell);
         return;
     }
     
     if (strcmp("HELP", input) == 0){
-        kprint("HELP: ...");
-        kprint("\n>");
+        kprint("HELP:\n");
+        kprint(help);
+        kprint(shell);
         return;
     }
 
     if (strcmp("BB", input) == 0){
         kprint("SO, ICH HAU AB.");
-        asm volatile("hlt");
+        asm volatile("HLT");
+    }
+
+    if (strcmp("REBOOT", input) == 0){
+        kprint("REBOOTING...");
+        asm volatile("HLT");
     }
 
     kprint("NO SUCH COMMAND, TYPE HELP FOR FURTHER REFERENCE");
-    kprint("\n> ");
+    kprint(shell);
     return;
 }

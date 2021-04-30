@@ -64,7 +64,6 @@ void reverse(char s[])
     }
 }
 
-/* K&R */
 int strlen(char s[])
 {
     int i = 0;
@@ -86,8 +85,6 @@ void backspace(char s[])
     s[len - 1] = '\0';
 }
 
-/* K&R 
- * Returns <0 if s1<s2, 0 if s1==s2, >0 if s1>s2 */
 int strcmp(char s1[], char s2[])
 {
     int i;
