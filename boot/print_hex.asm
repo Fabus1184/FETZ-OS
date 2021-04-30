@@ -1,4 +1,4 @@
-;iving the data in 'dx'
+; receiving the data in 'dx'
 ; For the examples we'll assume that we're called with dx=0x1234
 print_hex:
     pusha
@@ -12,7 +12,7 @@ print_hex:
 hex_loop:
     cmp cx, 4 ; loop 4 times
     je end
-
+    
     ; 1. convert last char of 'dx' to ascii
     mov ax, dx ; we will use 'ax' as our working register
     and ax, 0x000f ; 0x1234 -> 0x0004 by masking first three to zeros
@@ -44,6 +44,3 @@ end:
 
 HEX_OUT:
     db '0x0000',0 ; reserve memory for our new string
-
-
-

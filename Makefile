@@ -1,25 +1,25 @@
-# $@ = target file
-# $< = first dependency
-# $^ = all dependencies
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c libc/*.c)
+HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h libc/*.h)
+OBJ = ${C_SOURCES:.c=.o cpu/interrupt.o}
 
-# First rule is the one executed when no parameters are fed to the Makefile
-all: clean
+CC = gcc
+CFLAGS = -g -fno-pie -m32
 
-# Notice how dependencies are built as needed
-kernel.bin: kernel_entry.o kernel.o
+os-image.bin: boot/bootsect.bin kernel.bin
+	cat $^ > os-image.bin
+
+kernel.bin: boot/kernel_entry.o ${OBJ}
 	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
 
-kernel_entry.o: kernel_entry.asm
+%.o: %.c ${HEADERS}
+	${CC} ${CFLAGS} -ffreestanding -c $< -o $@
+
+%.o: %.asm
 	nasm $< -f elf -o $@
 
-kernel.o: kernel.c
-	gcc -fno-pie -c -m32 -ffreestanding -c $< -o $@
-
-bootsect.bin: bootsect.asm
+%.bin: %.asm
 	nasm $< -f bin -o $@
 
-os-image.bin: bootsect.bin kernel.bin
-	cat $^ > $@
-
-clean: os-image.bin
-	rm *.bin *.o
+clean:
+	rm -rf *.bin *.dis *.o os-image.bin *.elf
+	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o
