@@ -3,7 +3,7 @@
 # $^ = all dependencies
 
 # First rule is the one executed when no parameters are fed to the Makefile
-all: os-image.bin
+all: clean
 
 # Notice how dependencies are built as needed
 kernel.bin: kernel_entry.o kernel.o
@@ -15,15 +15,11 @@ kernel_entry.o: kernel_entry.asm
 kernel.o: kernel.c
 	gcc -fno-pie -c -m32 -ffreestanding -c $< -o $@
 
-# Rule to disassemble the kernel - may be useful to debug
-kernel.dis: kernel.bin
-	ndisasm -b 32 $< > $@
-
 bootsect.bin: bootsect.asm
 	nasm $< -f bin -o $@
 
 os-image.bin: bootsect.bin kernel.bin
 	cat $^ > $@
 
-clean:
-	rm *.bin *.o *.dis | exit 0
+clean: os-image.bin
+	rm *.bin *.o

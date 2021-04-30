@@ -1,5 +1,24 @@
 #include "kernel.h"
 
+int crs = 0;
+
+int cursor(){
+	if(crs > BUFSIZE){
+		crs=0;
+	}
+	return crs++;
+}
+
+int strlen(char*p)
+{
+	int count = 0;
+	while (*p != '\0') {
+	count++;
+	p++;
+}
+return count;
+}
+
 uint16 vga_entry(unsigned char ch, uint8 fore_color, uint8 back_color)
 {
 	uint16 ax = 0;
@@ -22,33 +41,46 @@ void clear_vga_buffer(uint16 **buffer, uint8 fore_color, uint8 back_color)
 	uint32 i;
 	for (i = 0; i < BUFSIZE; i++)
 	{
-		(*buffer)[i] = vga_entry(NULL, fore_color, back_color);
+		(*buffer)[i] = vga_entry(0, fore_color, back_color);
 	}
 }
 
 //initialize vga buffer
 void init_vga(uint8 fore_color, uint8 back_color)
 {
-	vga_buffer = (uint16 *)VGA_ADDRESS;					   //point vga_buffer pointer to VGA_ADDRESS
-	clear_vga_buffer(&vga_buffer, fore_color, back_color); //clear buffer
+	vga_buffer = (uint16 *)VGA_ADDRESS;
+	clear_vga_buffer(&vga_buffer, fore_color, back_color);
+}
+
+void print(char string[], int fg, int bg){
+	for(int i=0; i<strlen(string); i++){
+		vga_buffer[cursor()] = vga_entry(string[i], fg, bg);
+	}
+}
+
+void println(char string[], int fg, int bg){
+	for(int i=0; i<strlen(string); i++){
+		vga_buffer[cursor()] = vga_entry(string[i], fg, bg);
+	}
+
+	for(int i=0; i<120-(crs % 120); i++){
+		vga_buffer[cursor()] = vga_entry(' ', fg, bg);
+	}
+
 }
 
 void main()
 {
-	int a = 16807;
-	int m = 2147483647;
-	int seed = (a * seed) % m;
-	int random = seed / m;
-
 	init_vga(WHITE, BLACK);
 
-	for(int c = 0; c<16; c++){
-		for(int i=0; i<BUFSIZE; i++){
-			vga_buffer[i] = vga_entry('-',WHITE,c);
-		}
+	char a[] = "HALLO WELT !11!1!!!";
+	println(a,MAGENTA, BLACK);
 
-		if(c == 15){
-			c = 0;
-		}
-	}
+	char b[] = "test";
+	print(b,GREEN,BLACK);
+
+	/*
+	char c[] = "neeext123123";
+	println(c,YELLOW,BLACK);
+	*/
 }
