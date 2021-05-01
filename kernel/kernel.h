@@ -3,4 +3,7 @@
 
 void user_input(char *input);
 
+#define shell "\n$>"
+
+
 #endif

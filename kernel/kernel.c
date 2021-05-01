@@ -3,19 +3,18 @@
 #include "kernel.h"
 #include "../libc/string.h"
 
-#define shell "\n$>"
-
 void main() {
     isr_install();
     irq_install();
+
+    //SCHEISSE LESEN
+
 
     clear_screen();
 
     kprint("WELCOME TO FETZ-OS v1.0");
     kprint(shell);
-}
-
-char help[] = "AVAILABLE COMMANDS: \n\tECHO \n\tBB \n\tREBOOT";
+}   
 
 void user_input(char *input) {
 
@@ -29,8 +28,7 @@ void user_input(char *input) {
     }
     
     if (strcmp("HELP", input) == 0){
-        kprint("HELP:\n");
-        kprint(help);
+        kprint("HELP: TEXT HIER");
         kprint(shell);
         return;
     }

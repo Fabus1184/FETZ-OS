@@ -66,6 +66,11 @@ static void keyboard_callback(registers_t regs) {
     } else if (scancode == ENTER) {
         kprint("\n");
         user_input(key_buffer);
+
+        for(int i=0; i<256; i++){
+            key_buffer[i] = '\0';
+        }
+
         return;
 
     } else {
