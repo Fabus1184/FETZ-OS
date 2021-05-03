@@ -7,9 +7,6 @@ void main() {
     isr_install();
     irq_install();
 
-    //SCHEISSE LESEN
-
-
     clear_screen();
 
     kprint("WELCOME TO FETZ-OS v1.0");
@@ -17,7 +14,8 @@ void main() {
 }   
 
 void user_input(char *input) {
-    
+
+    //ALLAH KAPUTTPUTT
     char sub[4];
     substring(sub, input, 0, 5);
     if (strcmp("ECHO ", sub) == 0){
