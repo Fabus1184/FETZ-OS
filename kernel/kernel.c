@@ -18,6 +18,8 @@ void main() {
 
 void user_input(char *input) {
 
+    char sub0[6];
+
     char sub[4];
     substring(sub, input, 0, 5);
     if (strcmp("ECHO ", sub) == 0){
