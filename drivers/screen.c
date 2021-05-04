@@ -1,6 +1,6 @@
 #include "screen.h"
 #include "../cpu/ports.h"
-#include "../libc/mem.h"
+#include "../lib/mem.h"
 
 /* Declaration of private functions */
 int get_cursor_offset();

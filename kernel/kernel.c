@@ -1,7 +1,11 @@
 #include "../cpu/isr.h"
 #include "../drivers/screen.h"
 #include "kernel.h"
-#include "../libc/string.h"
+#include "../lib/functions.h"
+
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
 
 #define shell "$>"
 
@@ -18,6 +22,7 @@ void main() {
             kprint_at("-",-1,-1,16*c+d);
         }
     }
+
     print("");
     kprint(shell);
 }
@@ -37,7 +42,7 @@ void user_input(char *input) {
 
     char dump[strlen(input)];
 
-    substring(dump, input, 0, 5);
+    strncpy(dump, input, 5);
     if (strcmp("echo ", dump) == 0){
         substring(dump, input, 5, strlen(input));
         print(dump);
