@@ -1,11 +1,15 @@
 #include "string.h"
 #include "../cpu/type.h"
+#include "math.h"
+#include "../drivers/screen.h"
 
 /**
  * K&R implementation
  */
 
-int int_table[10] = {'0','1','2','3','4','5','6','7','8','9'};
+int int_table[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+char hexes[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+
 
 void int_to_ascii(int n, char str[])
 {
@@ -23,6 +27,13 @@ void int_to_ascii(int n, char str[])
     str[i] = '\0';
 
     reverse(str);
+}
+
+char int_to_ascii_char(int n){
+    if( n < 0 || n > 15){
+        return '\0';
+    }
+    return hexes[n];
 }
 
 void hex_to_ascii(int n, char str[])
@@ -110,3 +121,55 @@ char *substring(char *destination, const char *source, int beg, int n)
     return destination;
 }
 
+int char_to_int(char in){
+    if(in == '0'){
+        return 0;
+    }
+    if(in == '1'){
+        return 1;
+    }
+    if(in == '2'){
+        return 2;
+    }
+    if(in == '3'){
+        return 3;
+    }
+    if(in == '4'){
+        return 4;
+    }
+    if(in == '5'){
+        return 5;
+    }
+    if(in == '6'){
+        return 6;
+    }
+    if(in == '7'){
+        return 7;
+    }
+    if(in == '8'){
+        return 8;
+    }
+    if(in == '9'){
+        return 9;
+    }
+
+    if(in == 'A'){
+        return 10;
+    }
+    if(in == 'B'){
+        return 11;
+    }
+    if(in == 'C'){
+        return 12;
+    }
+    if(in == 'D'){
+        return 13;
+    }
+    if(in == 'E'){
+        return 14;
+    }
+    if(in == 'F'){
+        return 15;
+    }
+    return -1;
+}

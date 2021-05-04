@@ -15,9 +15,12 @@
 
 /* Public kernel API */
 void clear_screen();
-void kprint_at(char *message, int col, int row);
+void kprint_at(char *message, int col, int row, int color);
 void kprint(char *message);
+void print(char *message);
+void printcol(char *message, int color);
 void kprint_backspace();
+void setcolor(int color);
 int get_offset(int col, int row);
 int get_offset_row(int offset);
 int get_offset_col(int offset);
