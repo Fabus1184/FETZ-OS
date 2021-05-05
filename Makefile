@@ -9,7 +9,7 @@ os-image.bin: boot/bootsect.bin kernel.bin
 	cat $^ > os-image.bin
 
 kernel.bin: boot/kernel_entry.o ${OBJ}
-	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary 
+	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary --entry main
 
 %.o: %.c ${HEADERS}
 	${CC} ${CFLAGS} $< -o $@
