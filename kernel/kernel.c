@@ -4,12 +4,14 @@
 #include "../lib/functions.h"
 
 #include <math.h>
-#include <stdio.h>
 #include <string.h>
 
 #define shell "$>"
 
 void main() {
+
+    double d = sqrt(2);
+
     isr_install();
     irq_install();
 
@@ -20,8 +22,7 @@ void main() {
     for(int c = 0; c<16; c++){
         for(int d = 0; d<16; d++){
             kprint_at("-",-1,-1,16*c+d);
-        }
-    }
+    }}
 
     print("");
     kprint(shell);

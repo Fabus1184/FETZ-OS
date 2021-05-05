@@ -1,15 +1,15 @@
 C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c lib/*.c)
-HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h lib/*.h)
+HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h lib/*.h)	
 OBJ = ${C_SOURCES:.c=.o cpu/interrupt.o}
 
 CC = gcc
-CFLAGS = -c -g -fno-pie -m32
+CFLAGS = -g -fno-pie -m32 -static
 
 os-image.bin: boot/bootsect.bin kernel.bin
 	cat $^ > os-image.bin
 
 kernel.bin: boot/kernel_entry.o ${OBJ}
-	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
+	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary 
 
 %.o: %.c ${HEADERS}
 	${CC} ${CFLAGS} $< -o $@

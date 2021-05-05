@@ -16,3 +16,4 @@ jobs:
     - name: deps
       run: apt install nasm gcc-multilib
     - name: make
+      run: make
