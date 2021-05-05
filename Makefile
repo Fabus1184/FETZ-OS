@@ -3,7 +3,7 @@ HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h lib/*.h)
 OBJ = ${C_SOURCES:.c=.o cpu/interrupt.o}
 
 CC = gcc
-CFLAGS = -g -fno-pie -m32 -static
+CFLAGS = -c -g -fno-pie -m32
 
 os-image.bin: boot/bootsect.bin kernel.bin
 	cat $^ > os-image.bin

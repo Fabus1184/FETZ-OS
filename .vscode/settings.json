@@ -3,6 +3,7 @@
         "math.h": "c",
         "screen.h": "c",
         "isr.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "functions.h": "c"
     }
 }
